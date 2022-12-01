@@ -1,0 +1,1 @@
+add_executable(p1_getting_to_work main.c)
