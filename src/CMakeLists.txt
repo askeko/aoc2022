@@ -1,1 +1,1 @@
-add_executable(p1_getting_to_work main.c)
+add_executable(day1_1 day1_1.c)
