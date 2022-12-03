@@ -61,39 +61,40 @@ char shared_letters(const char* string1, const char* string2, const char* string
         return '0';
     }
 
-    int count[256] = {0};
+    int count1[256] = {0};
+    int count2[256] = {0};
 
     printf("Shared letters between '%s' and '%s' and '%s' equals: = ", string1, string2, string3);
 
     while (*string1) {
-        count[*string1++]++;
+        count1[*string1++]++;
     }
 
     while (*string2) {
-        count[*string2++]++;
+        count2[*string2++]++;
     }
-    
+
     while (*string3) {
-        if (count[*string3] > 0) {
+        if (count1[*string3] > 0 && count2[*string3] > 0) {
             printf("%c\n", *string3);
             return *string3;
         }
         string3++;
     }
-/*
-    while (*string2) {
-        if (count[*string2] > 0) {
-            while (*string3) {
-                if (count[*string3] > 0) {
-                    printf("%c\n", *string3);
-                    return *string3;
+    /*
+        while (*string2) {
+            if (count[*string2] > 0) {
+                while (*string3) {
+                    if (count[*string3] > 0) {
+                        printf("%c\n", *string3);
+                        return *string3;
+                    }
+                    string3++;
                 }
-                string3++;
             }
+            string2++;
         }
-        string2++;
-    }
-*/
+    */
     return '0';
 }
 
