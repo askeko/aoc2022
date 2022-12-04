@@ -13,6 +13,7 @@ typedef struct cleaner_pair_t {
 void open_file(FILE* fp);
 void scan_cleaners(FILE* fp, cleaner_pair_t* cleaners);
 int check_same_range(cleaner_pair_t* cleaners);
+int check_overlap(cleaner_pair_t* cleaners);
 
 int main() {
     FILE* fp = fopen("day4_cleaners.txt", "r");
@@ -29,7 +30,9 @@ int main() {
 
     scan_cleaners(fp, cleaners);
     int contains_same_range = check_same_range(cleaners);
-    printf("%d assignments contain the same range", contains_same_range);
+    int overlaps = check_overlap(cleaners);
+    printf("%d assignments contain the same range\n", contains_same_range);
+    printf("%d assignments overlap\n", overlaps);
 
     fclose(fp);
     free(cleaners);
@@ -57,4 +60,25 @@ int check_same_range(cleaner_pair_t* cleaners) {
     }
 
     return contains_same_range;
+}
+
+int check_overlap(cleaner_pair_t* cleaners) {
+    int overlaps = 0;
+    for (int i = 0; i < NUM_OF_PAIRS; i++) {
+        if (cleaners[i].elf1_low >= cleaners[i].elf2_low &&
+            cleaners[i].elf1_low <= cleaners[i].elf2_up) {
+            overlaps++;
+        } else if (cleaners[i].elf1_up >= cleaners[i].elf2_low &&
+                   cleaners[i].elf1_low <= cleaners[i].elf2_up) {
+            overlaps++;
+        } else if (cleaners[i].elf2_low >= cleaners[i].elf1_low &&
+                   cleaners[i].elf2_low <= cleaners[i].elf1_up) {
+            overlaps++;
+        } else if (cleaners[i].elf2_low >= cleaners[i].elf1_low &&
+                   cleaners[i].elf2_low <= cleaners[i].elf1_up) {
+            overlaps++;
+        }
+    }
+
+    return overlaps;
 }
